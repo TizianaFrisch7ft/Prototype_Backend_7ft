@@ -1,0 +1,35 @@
+{
+  "name": "prototype_backend_7ft",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx nodemon --watch src --ext ts --exec npx ts-node src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "axios": "^1.9.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "duckduckgo-search": "^1.0.7",
+    "express": "^5.1.0",
+    "mongoose": "^8.15.1",
+    "multer": "^2.0.0",
+    "openai": "^5.0.1",
+    "pdf-parse": "^1.1.1",
+    "weaviate-ts-client": "^2.2.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.18",
+    "@types/express": "^5.0.2",
+    "@types/multer": "^1.4.12",
+    "@types/node": "^22.15.29",
+    "@types/pdf-parse": "^1.1.5",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
