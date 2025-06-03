@@ -3,7 +3,7 @@ import cors from "cors"
 import dotenv from "dotenv"
 
 // 🧾 PDF
-import pdfRulesRoutes from "./agents/pdf/routes/pdfAgent";
+import pdfAgents from "./agents/pdf/routes/pdfAgent";
 
 // 📊 Auditor de gastos
 import auditRoutes from "./agents/expensesAuditor/routes/auditRoutes";
@@ -12,11 +12,11 @@ import auditRoutes from "./agents/expensesAuditor/routes/auditRoutes";
 import vectorRoutes from "./agents/vectorize/routes/vectorRoutes";
 
 // 🌐 Web Search
-import webSearchRoutes from "./agents/webSearch/routes/webRoutes";
+import webRoutes from "./agents/webSearch/routes/webRoutes";
 
 // 🗄️ MongoDB
-import mongoDBRoutes from "./agents/mongoDB/routes/dbRoutes";
-import mongoUserRoutes from "./agents/mongoDB/routes/userRoutes";
+import dbRoutes from "./agents/mongoDB/routes/dbRoutes";
+import userRoutes from "./agents/mongoDB/routes/userRoutes";
 
 
 
@@ -27,17 +27,16 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-app.use("/api/pdf", pdfRulesRoutes);
+app.use("/api/pdf", pdfAgents);
 
 
 app.use("/api/audit", auditRoutes);
 
 app.use("/api/vector", vectorRoutes);
-app.use("/api/web", webSearchRoutes);
+app.use("/api/web", webRoutes);
 
-app.use("/api/mongo", mongoDBRoutes);
-app.use("/api/mongo/user", mongoUserRoutes);
-
+app.use("/api/mongo", dbRoutes);
+app.use("/api/mongo/user", userRoutes);
 
 const PORT = process.env.PORT || 4000
 app.listen(PORT, () => {
