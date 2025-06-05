@@ -4,6 +4,7 @@ import dotenv from "dotenv"
 
 // 🧾 PDF
 import pdfAgents from "./agents/pdf/routes/pdfAgent";
+import webPageQARoutes from "./agents/web/routes/webPageQARoutes";
 
 // 📊 Auditor de gastos
 import auditRoutes from "./agents/expensesAuditor/routes/auditRoutes";
@@ -37,6 +38,8 @@ app.use("/api/web", webRoutes);
 
 app.use("/api/mongo", dbRoutes);
 app.use("/api/mongo/user", userRoutes);
+
+app.use("/webpage", webPageQARoutes);
 
 const PORT = process.env.PORT || 4000
 app.listen(PORT, () => {
