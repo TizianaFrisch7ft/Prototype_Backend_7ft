@@ -1,24 +1,31 @@
 import { OpenAI } from 'openai';
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+import fs from 'fs/promises';
+import path from 'path';
+
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY! });
 
 export const generateLLMResponse = async ({ query, consulta, pdfChunks, videoLink }: any) => {
-  const prompt = `
-  Usuario preguntó: "${query}"
+  // Leer prompt desde archivo
+  const promptPath = path.resolve(__dirname, '../../../prompts/hybridPrompt.json');
+  const data = await fs.readFile(promptPath, 'utf-8');
+  const { system, template } = JSON.parse(data);
 
-  Consulta identificada: ${consulta.tema}
-  Resumen técnico: ${consulta.resumen}
+  // Reemplazar variables en template
+  const filledPrompt = template
+    .replace('{{query}}', query)
+    .replace('{{tema}}', consulta.tema)
+    .replace('{{resumen}}', consulta.resumen)
+    .replace('{{pdfChunks}}', pdfChunks.join('\n- '))
+    .replace('{{videoLink}}', videoLink || 'No disponible');
 
-  Fragmentos técnicos relevantes:
-  - ${pdfChunks.join('\n- ')}
-
-  Video asociado: ${videoLink}
-
-  Por favor, generá una respuesta clara, profesional y útil para el usuario combinando esta información.`;
-
+  // Enviar a OpenAI
   const completion = await openai.chat.completions.create({
     model: 'gpt-4',
-    messages: [{ role: 'user', content: prompt }]
+    messages: [
+      { role: 'system', content: system },
+      { role: 'user', content: filledPrompt }
+    ]
   });
 
-  return completion.choices[0].message.content;
+  return completion.choices[0].message.content || 'No se pudo generar respuesta.';
 };

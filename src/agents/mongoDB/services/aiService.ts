@@ -1,5 +1,7 @@
 import { OpenAI } from "openai";
 import dotenv from "dotenv";
+import fs from "fs/promises";
+import path from "path";
 
 dotenv.config();
 
@@ -11,25 +13,26 @@ export const generateAnswer = async (
   mongoInfo: string,
   userQuestion: string
 ): Promise<string> => {
-  const prompt = `
-Usá esta información de MongoDB para responder profesionalmente:
+  // Leer el prompt desde el archivo
+  const promptPath = path.join(__dirname, "../db/prompts/mongoPrompt.json");
+  const promptDataRaw = await fs.readFile(promptPath, "utf-8");
+  const promptData = JSON.parse(promptDataRaw);
 
-📄 Info desde Mongo: ${mongoInfo}
-❓ Pregunta del usuario: ${userQuestion}
-
-Respondé de forma clara, útil y precisa.
-`;
+  const systemPrompt = promptData.system;
+  const userPrompt = promptData.template
+    .replace("{{mongoInfo}}", mongoInfo)
+    .replace("{{userQuestion}}", userQuestion);
 
   const completion = await openai.chat.completions.create({
     model: "gpt-4",
     messages: [
       {
         role: "system",
-        content: "Sos un agente experto que responde usando datos extraídos de MongoDB.",
+        content: systemPrompt,
       },
       {
         role: "user",
-        content: prompt,
+        content: userPrompt,
       },
     ],
   });

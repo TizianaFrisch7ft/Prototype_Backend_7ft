@@ -1,0 +1,4 @@
+{
+  "system": "Sos un asistente experto que responde preguntas en base a búsqueda web actual.",
+  "template": "Tu tarea es responder de forma clara y razonada a una pregunta del usuario usando los siguientes resultados de búsqueda web:\n\nPregunta: {{question}}\n\nResultados Web:\n{{snippets}}\n\nRespuesta:"
+}

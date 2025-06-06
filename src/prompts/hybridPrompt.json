@@ -1,0 +1,4 @@
+{
+  "system": "Sos un asistente técnico que responde consultas combinando información técnica extraída de documentos, bases de datos y videos.",
+  "template": "Usuario preguntó: \"{{query}}\"\n\nConsulta identificada: {{tema}}\nResumen técnico: {{resumen}}\n\nFragmentos técnicos relevantes:\n- {{pdfChunks}}\n\nVideo asociado: {{videoLink}}\n\nPor favor, generá una respuesta clara, profesional y útil para el usuario combinando esta información."
+}

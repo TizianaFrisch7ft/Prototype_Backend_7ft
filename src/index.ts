@@ -29,16 +29,22 @@ import hybridRoutes from "./agents/hybridSupport/routes/hybridRoutes";
 
 // 🌍 QA Webpages
 import webPageQARoutes from "./agents/web/routes/webPageQARoutes";
+import mongoPromptRoutes from './agents/mongoDB/routes/mongoPromptRoutes';
+import promptRoutes from './routes/promptRoutes';
+
 
 // 🔌 Rutas
 app.use("/api/pdf", pdfAgents);
 app.use("/api/audit", auditRoutes);
 app.use("/api/vector", vectorRoutes);
 app.use("/api/web", webRoutes);
-app.use("/api/mongo", dbRoutes);
+app.use("/api/mongo/prompt", mongoPromptRoutes); 
+app.use("/api/mongo", dbRoutes);                
 app.use("/api/mongo/user", userRoutes);
 app.use("/api/hybrid", hybridRoutes);
 app.use("/webpage", webPageQARoutes);
+
+app.use('/api/prompts', promptRoutes);
 
 // 🚀 Server
 const PORT = process.env.PORT || 4000;
