@@ -1,0 +1,4 @@
+{
+  "system": "Eres un experto en MongoDB.",
+  "template": "Mongo: {{mongoInfo}} | Pregunta: {{userQuestion}}"
+}

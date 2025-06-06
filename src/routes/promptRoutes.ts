@@ -3,11 +3,15 @@ import fs from 'fs/promises';
 import path from 'path';
 
 const router = Router();
-const promptsDir = path.resolve(__dirname, '../prompts');
+const promptsDir = path.resolve(__dirname, '../../prompts');
 
+// Seguridad: solo permite archivos .json y sin rutas relativas
+function isValidPromptFile(filename: string) {
+  return /^[\w-]+\.json$/.test(filename);
+}
 
 // GET /api/prompts → lista archivos JSON
-router.get('/', async (_req: Request, res: Response): Promise<void> => {
+router.get('/', async (_req: Request, res: Response) => {
   try {
     const files = await fs.readdir(promptsDir);
     const jsonFiles = files.filter(file => file.endsWith('.json'));
@@ -19,8 +23,12 @@ router.get('/', async (_req: Request, res: Response): Promise<void> => {
 });
 
 // GET /api/prompts/:filename → obtiene un archivo JSON
-router.get('/:filename', async (req: Request, res: Response): Promise<void> => {
+router.get('/:filename', async (req: Request, res: Response) => {
   const { filename } = req.params;
+  if (!isValidPromptFile(filename)) {
+    res.status(400).json({ error: 'Nombre de archivo inválido' });
+    return;
+  }
   const filePath = path.join(promptsDir, filename);
 
   try {
@@ -28,16 +36,19 @@ router.get('/:filename', async (req: Request, res: Response): Promise<void> => {
     res.json(JSON.parse(content));
   } catch (err) {
     console.error(`❌ Error leyendo ${filename}:`, err);
-    res.status(500).json({ error: 'No se pudo leer el archivo' });
+    res.status(404).json({ error: 'No se pudo leer el archivo' });
   }
 });
 
-// PUT /api/prompts/:filename → guarda cambios
-router.put('/:filename', async (req: Request, res: Response): Promise<void> => {
+router.put('/:filename', async (req: Request, res: Response) => {
   const { filename } = req.params;
+  if (!isValidPromptFile(filename)) {
+    res.status(400).json({ error: 'Nombre de archivo inválido' });
+    return;
+  }
   const { system, template } = req.body;
 
-  if (!system || !template) {
+  if (typeof system !== 'string' || typeof template !== 'string') {
     res.status(400).json({ error: 'Faltan campos requeridos (system, template)' });
     return;
   }
