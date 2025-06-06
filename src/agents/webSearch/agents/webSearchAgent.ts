@@ -20,7 +20,7 @@ export const handleWebSearch = async (req: Request, res: Response): Promise<void
     const snippets = await performWebSearch(question);
 
     // 📄 Cargar el prompt desde archivo
-    const promptPath = path.resolve(__dirname, '../../../prompts/webPrompt.json');
+    const promptPath = path.resolve(__dirname, '../../../prompts/agent-web.json');
     const promptData = await fs.readFile(promptPath, 'utf-8');
     const { system, template } = JSON.parse(promptData);
 

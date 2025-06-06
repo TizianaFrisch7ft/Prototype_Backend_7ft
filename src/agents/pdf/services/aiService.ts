@@ -10,7 +10,7 @@ export const generateAnswerFromPDF = async (
   docText: string,
   userQuestion: string
 ): Promise<string> => {
-  const promptPath = path.resolve(__dirname, '../../../prompts/pdfPrompt.json');
+  const promptPath = path.resolve(__dirname, '../../../prompts/agent-documents.json');
   const data = await fs.readFile(promptPath, 'utf-8');
   const { system, template } = JSON.parse(data);
 

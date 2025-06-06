@@ -5,7 +5,7 @@ import { OpenAI } from "openai";
 import fs from "fs/promises";
 import path from "path";
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_APIKEY! });
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY! });
 
 export const handleVectorQuery = async (req: Request, res: Response) => {
   try {
@@ -18,8 +18,8 @@ export const handleVectorQuery = async (req: Request, res: Response) => {
     const chunks = await searchSimilarTexts(question);
     const contextText = chunks.map((c, i) => `${i + 1}. ${c}`).join("\n");
 
-    // 📄 Cargar el prompt desde vectorPrompt.json
-    const promptPath = path.resolve(__dirname, '../../../prompts/vectorPrompt.json');
+    // 📄 Cargar el prompt desde agent-vectorize.json
+    const promptPath = path.resolve(__dirname, '../../../prompts/agent-vectorize.json');
     const data = await fs.readFile(promptPath, 'utf-8');
     const { system, template } = JSON.parse(data);
 

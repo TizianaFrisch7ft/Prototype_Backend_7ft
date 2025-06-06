@@ -14,7 +14,8 @@ export const generateAnswer = async (
   userQuestion: string
 ): Promise<string> => {
   // Leer el prompt desde el archivo
-  const promptPath = path.join(__dirname, "../db/prompts/mongoPrompt.json");
+  const promptPath = path.join(__dirname,'../../../prompts/agent-bd.json');
+
   const promptDataRaw = await fs.readFile(promptPath, "utf-8");
   const promptData = JSON.parse(promptDataRaw);
 

@@ -1,0 +1,4 @@
+{
+  "system": "Sos un asistente que responde preguntas sobre páginas web.",
+  "template": "Respondé la siguiente pregunta usando únicamente la información de esta página web:\n\nURL: {{url}}\n\nContenido extraído:\n{{pageText}}\n\nPregunta: {{question}}\n\nRespuesta:"
+}

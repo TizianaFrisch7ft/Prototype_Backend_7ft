@@ -6,7 +6,7 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY! });
 
 export const generateLLMResponse = async ({ query, consulta, pdfChunks, videoLink }: any) => {
   // Leer prompt desde archivo
-  const promptPath = path.resolve(__dirname, '../../../prompts/hybridPrompt.json');
+  const promptPath = path.resolve(__dirname, '../../../prompts/agent-hybrid.json');
   const data = await fs.readFile(promptPath, 'utf-8');
   const { system, template } = JSON.parse(data);
 
