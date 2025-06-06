@@ -36,14 +36,14 @@ import promptRoutes from './routes/promptRoutes';
 // 🔌 Rutas
 app.use("/api/agent-pdf", pdfAgents);
 app.use("/api/agent-audit", auditRoutes);
-app.use("/api/agent-vector", vectorRoutes);
 app.use("/api/agent-websearch", webSearchRoutes);
 app.use("/api/agent-db", dbRoutes);
 app.use("/api/agent-vectorize", vectorRoutes);
 app.use("/api/agent-web", webPageQARoutes); 
 app.use('/api/prompts', promptRoutes);
 // 🚀 Server
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
   console.log(`🟢 Server listening at http://localhost:${PORT}`);
 });
+
