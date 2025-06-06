@@ -19,7 +19,7 @@ export const handleVectorQuery = async (req: Request, res: Response) => {
     const contextText = chunks.map((c, i) => `${i + 1}. ${c}`).join("\n");
 
     // 📄 Cargar el prompt desde agent-vectorize.json
-    const promptPath = path.resolve(__dirname, '../../../prompts/agent-vectorize.json');
+    const promptPath = path.resolve(__dirname, '../../../../prompts/agent-vectorize.json');
     const data = await fs.readFile(promptPath, 'utf-8');
     const { system, template } = JSON.parse(data);
 

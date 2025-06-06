@@ -9,7 +9,7 @@ const client = weaviate.client({
     ? new weaviate.ApiKey(process.env.WEAVIATE_API_KEY)
     : undefined,
   headers: {
-    'X-Openai-Api-Key': process.env.OPENAI_APIKEY || '', // <-- Asegura que la API Key esté aquí
+    'X-Openai-Api-Key': process.env.OPENAI_API_KEY || '', // <-- Asegura que la API Key esté aquí
   },
 });
 

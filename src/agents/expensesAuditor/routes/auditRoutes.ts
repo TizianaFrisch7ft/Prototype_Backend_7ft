@@ -11,6 +11,7 @@ const upload = multer({ dest: "uploads/" });
 
 router.post("/connect-db", connectToMongoFromClient); 
 router.post("/upload-rules", upload.single("file"), uploadRulesPDF);
-router.post("/audit", auditWithRulesAndData);
+router.post("/ask", auditWithRulesAndData);
+
 
 export default router;

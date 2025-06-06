@@ -18,7 +18,7 @@ import auditRoutes from "./agents/expensesAuditor/routes/auditRoutes";
 import vectorRoutes from "./agents/vectorize/routes/vectorRoutes";
 
 // 🌐 Web Search
-import webRoutes from "./agents/webSearch/routes/webRoutes";
+import webSearchRoutes from "./agents/webSearch/routes/webRoutes";
 
 // 🗄️ MongoDB
 import dbRoutes from "./agents/mongoDB/routes/dbRoutes";
@@ -29,23 +29,19 @@ import hybridRoutes from "./agents/hybridSupport/routes/hybridRoutes";
 
 // 🌍 QA Webpages
 import webPageQARoutes from "./agents/web/routes/webPageQARoutes";
-import mongoPromptRoutes from './agents/mongoDB/routes/mongoPromptRoutes';
+
 import promptRoutes from './routes/promptRoutes';
 
 
 // 🔌 Rutas
-app.use("/api/pdf", pdfAgents);
-app.use("/api/audit", auditRoutes);
-app.use("/api/vector", vectorRoutes);
-app.use("/api/web", webRoutes);
-app.use("/api/mongo/prompt", mongoPromptRoutes); 
-app.use("/api/mongo", dbRoutes);                
-app.use("/api/mongo/user", userRoutes);
-app.use("/api/hybrid", hybridRoutes);
-app.use("/webpage", webPageQARoutes);
-
+app.use("/api/agent-pdf", pdfAgents);
+app.use("/api/agent-audit", auditRoutes);
+app.use("/api/agent-vector", vectorRoutes);
+app.use("/api/agent-websearch", webSearchRoutes);
+app.use("/api/agent-db", dbRoutes);
+app.use("/api/agent-vectorize", vectorRoutes);
+app.use("/api/agent-web", webPageQARoutes); 
 app.use('/api/prompts', promptRoutes);
-
 // 🚀 Server
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {

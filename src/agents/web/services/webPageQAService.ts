@@ -52,7 +52,7 @@ export const answerFromCachedContent = async (url: string, question: string): Pr
 
 
 const askOpenAI = async (pageText: string, url: string, question: string): Promise<string> => {
-  const promptPath = path.resolve(__dirname, "../../../prompts/agent-web.json");
+  const promptPath = path.resolve(__dirname, "../../../../prompts/agent-web.json");
   const data = await fs.readFile(promptPath, "utf-8");
   const { system, template } = JSON.parse(data);
 

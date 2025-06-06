@@ -31,13 +31,16 @@ export const uploadRulesPDF = async (req: Request, res: Response): Promise<void>
 export const auditWithRulesAndData = async (req: Request, res: Response): Promise<void> => {
   try {
     const { rulesId, question } = req.body;
+
     if (!rulesId || !question) {
+      console.warn("⚠️ Faltan campos requeridos en el body:", req.body);
       res.status(400).json({ error: "Faltan campos requeridos" });
       return;
     }
 
     const rules = getRulesText(rulesId);
     if (!rules) {
+      console.warn("📛 Reglas no encontradas para ID:", rulesId);
       res.status(404).json({ error: "Reglas no encontradas" });
       return;
     }
@@ -45,10 +48,17 @@ export const auditWithRulesAndData = async (req: Request, res: Response): Promis
     const expensesData = await fetchExpensesFromMongo();
     const answer = await generateAuditResponse(rules, expensesData, question);
 
+    if (!answer || answer.startsWith("🤖")) {
+      console.error("❌ Respuesta inválida del modelo:", answer);
+      res.status(500).json({ error: "No se pudo generar respuesta del modelo." });
+      return;
+    }
+
     res.json({ answer });
+
   } catch (err) {
-    console.error("Error en auditoría:", err);
-    res.status(500).json({ error: "No se pudo generar la auditoría" });
+    console.error("🔥 Error en auditoría:", err);
+    res.status(500).json({ error: "Error interno durante la auditoría" });
   }
 };
 

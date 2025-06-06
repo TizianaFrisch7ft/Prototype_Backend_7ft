@@ -34,7 +34,7 @@ router.post(
 );
 
 router.post(
-  "/ask-pdf",
+  "/ask",
   async (req: Request, res: Response) => {
     try {
       const { docId, question } = req.body;
