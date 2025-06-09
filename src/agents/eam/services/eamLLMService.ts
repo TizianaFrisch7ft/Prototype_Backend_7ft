@@ -21,7 +21,7 @@ export const generateLLMResponse = async ({
   const data = await fs.readFile(promptPath, "utf-8");
   const { system, template } = JSON.parse(data);
 
- const consultasTexto = consultas
+const consultasTexto = consultas
   .map(c =>
     `Q: ${c.user_input}\nA: ${c.output_user}` +
     (c.video ? `\nVideo: ${c.video}` : "")
@@ -29,11 +29,13 @@ export const generateLLMResponse = async ({
   .join("\n");
 
 
-  const finalPrompt = template
-    .replace("{{query}}", query)
-    .replace("{{machine}}", JSON.stringify(machine, null, 2))
-    .replace("{{consultas}}", consultasTexto)
-    .replace("{{pdfChunks}}", pdfChunks.join("\n"));
+  const videos = consultas.filter(c => c.video).map(c => c.video).join("\n");
+const finalPrompt = template
+  .replace("{{query}}", query)
+  .replace("{{machine}}", JSON.stringify(machine, null, 2))
+  .replace("{{consultas}}", consultasTexto)
+  .replace("{{pdfChunks}}", pdfChunks.join("\n"))
+  .replace("{{video}}", videos);
 
   const completion = await openai.chat.completions.create({
     model: "gpt-4",
@@ -43,7 +45,7 @@ export const generateLLMResponse = async ({
     ]
   });
 
- return {
+return {
   result: completion.choices[0].message.content || "No se pudo generar una respuesta.",
   videos: consultas.filter(c => c.video).map(c => c.video)
 };
