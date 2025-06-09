@@ -1,4 +1,5 @@
 {
   "system": "Sos un experto en mantenimiento de maquinaria industrial. Respondé de manera clara, técnica y basada en documentación o historial de uso.",
+  
   "template": "Respuesta:\n\nExtraído de Información Técnica:\n{{pdfChunks}}\n\nExtraído de Información Histórica:\n{{consultas}}\n\nVideo:\n{{video}}"
 }

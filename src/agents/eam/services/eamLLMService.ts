@@ -21,21 +21,28 @@ export const generateLLMResponse = async ({
   const data = await fs.readFile(promptPath, "utf-8");
   const { system, template } = JSON.parse(data);
 
-const consultasTexto = consultas
-  .map(c =>
-    `Q: ${c.user_input}\nA: ${c.output_user}` +
-    (c.video ? `\nVideo: ${c.video}` : "")
-  )
-  .join("\n");
+  const consultasTexto = consultas
+    .map(c =>
+      `Q: ${c.user_input}\nA: ${c.output_user}` +
+      (c.video ? `\nVideo: ${c.video}` : "")
+    )
+    .join("\n");
 
+  const videosArr = consultas.filter(c => c.video).map(c => c.video);
+  let finalTemplate = template;
 
-  const videos = consultas.filter(c => c.video).map(c => c.video).join("\n");
-const finalPrompt = template
-  .replace("{{query}}", query)
-  .replace("{{machine}}", JSON.stringify(machine, null, 2))
-  .replace("{{consultas}}", consultasTexto)
-  .replace("{{pdfChunks}}", pdfChunks.join("\n"))
-  .replace("{{video}}", videos);
+  // Si no hay videos, elimina la sección Video:\n{{video}} del template
+  if (videosArr.length === 0) {
+    finalTemplate = finalTemplate.replace(/Video:\s*\{\{video\}\}\n?/gi, "");
+  }
+
+  const videos = videosArr.join("\n");
+  const finalPrompt = finalTemplate
+    .replace("{{query}}", query)
+    .replace("{{machine}}", JSON.stringify(machine, null, 2))
+    .replace("{{consultas}}", consultasTexto)
+    .replace("{{pdfChunks}}", pdfChunks.join("\n"))
+    .replace("{{video}}", videos);
 
   const completion = await openai.chat.completions.create({
     model: "gpt-4",
@@ -45,9 +52,9 @@ const finalPrompt = template
     ]
   });
 
-return {
-  result: completion.choices[0].message.content || "No se pudo generar una respuesta.",
-  videos: consultas.filter(c => c.video).map(c => c.video)
-};
+  return {
+    result: completion.choices[0].message.content || "No se pudo generar una respuesta.",
+    videos: videosArr
+  };
 
 };
