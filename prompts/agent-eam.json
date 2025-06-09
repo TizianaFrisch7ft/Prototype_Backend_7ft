@@ -1,0 +1,4 @@
+{
+  "system": "Sos un experto en mantenimiento de maquinaria industrial. Respondé de manera clara, técnica y basada en documentación o historial de uso.",
+  "template": "Consulta del usuario: {{query}}\n\nInformación de máquina:\n{{machine}}\n\nHistorial de consultas:\n{{consultas}}\n\nFragmentos de PDF relevantes:\n{{pdfChunks}}"
+}

@@ -24,8 +24,7 @@ import webSearchRoutes from "./agents/webSearch/routes/webRoutes";
 import dbRoutes from "./agents/mongoDB/routes/dbRoutes";
 import userRoutes from "./agents/mongoDB/routes/userRoutes";
 
-// 💡 Hybrid Support
-import hybridRoutes from "./agents/hybridSupport/routes/hybridRoutes";
+import eamRoutes from "./agents/eam/routes/eamRoutes";
 
 // 🌍 QA Webpages
 import webPageQARoutes from "./agents/web/routes/webPageQARoutes";
@@ -41,6 +40,7 @@ app.use("/api/agent-db", dbRoutes);
 app.use("/api/agent-vectorize", vectorRoutes);
 app.use("/api/agent-web", webPageQARoutes); 
 app.use('/api/prompts', promptRoutes);
+app.use("/api/agent-eam", eamRoutes);
 // 🚀 Server
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
