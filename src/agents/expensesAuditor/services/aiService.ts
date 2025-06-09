@@ -12,7 +12,7 @@ export const generateAuditResponse = async (
   userQuestion: string
 ): Promise<string | null> => {
   try {
-    const promptPath = path.resolve(__dirname, '../../../prompts/agent-expensesauditor.json');
+    const promptPath = path.resolve(process.cwd(), 'prompts/agent-expensesauditor.json');
     const promptData = await fs.readFile(promptPath, 'utf-8');
     const { system, template } = JSON.parse(promptData);
 
